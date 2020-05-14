@@ -1,0 +1,16 @@
+# ignore vs and vscode folders, let people do their own tasks and settings
+.vs/**
+.vscode/**
+
+# ignore generated binaries
+bin/**
+bin-obj/**
+
+#ignore any vs generated files, this is handled with premake5
+*.vcxproj
+*.sln
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
