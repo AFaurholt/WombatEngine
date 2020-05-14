@@ -3,8 +3,8 @@
 .vscode/**
 
 # ignore generated binaries
-bin/**
-bin-obj/**
+**/bin/**
+**/bin-obj/**
 
 #ignore any vs generated files, this is handled with premake5
 *.vcxproj
