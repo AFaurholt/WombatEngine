@@ -1,0 +1,6 @@
+[submodule "Wombat/vendor/glfw"]
+	path = Wombat/vendor/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "Wombat/vendor/glm"]
+	path = Wombat/vendor/glm
+	url = https://github.com/g-truc/glm.git
