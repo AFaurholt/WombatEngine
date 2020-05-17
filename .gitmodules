@@ -4,3 +4,6 @@
 [submodule "Wombat/vendor/glfw"]
 	path = Wombat/vendor/glfw
 	url = https://github.com/AFaurholt/glfw.git
+[submodule "Wombat/vendor/imgui"]
+	path = Wombat/vendor/imgui
+	url = https://github.com/AFaurholt/imgui.git
