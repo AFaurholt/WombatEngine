@@ -1,0 +1,3 @@
+[submodule "Wombat/vendor/glm/glm"]
+	path = Wombat/vendor/glm/glm
+	url = https://github.com/AFaurholt/glm.git
