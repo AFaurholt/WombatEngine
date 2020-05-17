@@ -12,11 +12,13 @@ workspace "Wombat"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
-IncludeDir["GLFW"] = "Wombat/vendor/GLFW/include"
+IncludeDir["GLFW"] = "Wombat/vendor/glfw/include"
 IncludeDir["glm"] = "Wombat/vendor/glm"
+IncludeDir["vulkan"] = "Wombat/vendor/Vulkan-Headers/include"
 
 group "Dependencies"
-	include "Wombat/vendor/GLFW"
+	include "Wombat/vendor/Vulkan-Headers"
+	include "Wombat/vendor/glfw"
 
 group ""
 
@@ -41,7 +43,9 @@ project "Wombat"
 	includedirs
 	{
 		"%{prj.name}/src",
+		"%{IncludeDir.vulkan}",
 		"%{IncludeDir.GLFW}"
+
 	}
 
 	links
@@ -104,7 +108,7 @@ project "TestProject"
 	includedirs
 	{
 		"Wombat/src",
-		"Wombat/vendor"
+		"Wombat/vendor/**"
 	}
 
 	links
