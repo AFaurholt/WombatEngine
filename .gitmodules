@@ -7,3 +7,6 @@
 [submodule "Wombat/vendor/imgui"]
 	path = Wombat/vendor/imgui
 	url = https://github.com/AFaurholt/imgui.git
+[submodule "Wombat/vendor/Vulkan-Headers"]
+	path = Wombat/vendor/Vulkan-Headers
+	url = https://github.com/AFaurholt/Vulkan-Headers.git
