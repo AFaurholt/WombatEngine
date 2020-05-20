@@ -2,6 +2,7 @@
 #include "Renderer.h"
 
 #include <vector>
+#include <iostream>
 
 namespace Wombat
 {
@@ -16,7 +17,7 @@ namespace Wombat
             void OpenDebugWindow();
 
         private:
-            Wombat::Renderer _renderer;
+            Wombat::Renderer* _renderer;
 
 
     };

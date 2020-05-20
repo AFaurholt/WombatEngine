@@ -1,20 +1,25 @@
-#include <iostream>
+
 #include "Instance.h"
 
 namespace Wombat
 {
     Instance::Instance(const char* appName, bool isDebugEnabled)
     {
-        _renderer = Renderer(appName, isDebugEnabled);
+        std::cout << "Instance ctor" << std::endl;
+
+        _renderer = new Renderer(appName, isDebugEnabled);
     }
 
     Instance::~Instance()
     {
-        delete &_renderer;
+        std::cout << "Instance destruction" << std::endl;
+
+
+        delete _renderer;
     }
 
     void Instance::OpenDebugWindow()
     {
-        _renderer.OpenDebugWindow();
+        _renderer->OpenDebugWindow();
     }
 }

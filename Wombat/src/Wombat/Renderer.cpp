@@ -4,23 +4,18 @@ namespace Wombat
 {
     Renderer::Renderer(const char* appName, bool isDebugEnabled = true)
     {
+        std::cout << "Renderer ctor" << std::endl;
+
         //guard for GLFW
         //TODO figure out what to do if GLFW not used
         if (!glfwInit()) throw std::runtime_error("GLFW failed to init");
 
        Renderer::CreateInstance(appName, isDebugEnabled);
-
-        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-        _glfwDebugWindow = glfwCreateWindow(640, 480, "Wombat Debug", NULL, NULL);
-        if(glfwCreateWindowSurface(_vkInstanceHandle, _glfwDebugWindow, NULL, &_vkSurface) != VK_SUCCESS)
-            throw std::runtime_error("GLFW failed to create surface");
-
-        
-
     }
 
     Renderer::~Renderer()
     {
+        std::cout << "Renderer destruction" << std::endl;
         glfwTerminate();
 
         vkDestroySurfaceKHR(_vkInstanceHandle, _vkSurface, nullptr);
@@ -103,11 +98,11 @@ namespace Wombat
         }
         //extensions
         //TODO figure out what to do if GLFW is not used
-        uint32_t extensionCount = 1;
-        std::vector<const char*> extensionNames = {"VK_KHR_surface"};
-        // const char** extensionNames = glfwGetRequiredInstanceExtensions(&extensionCount);
+        uint32_t extensionCount = 0;
+        // std::vector<const char*> extensionNames = {"VK_KHR_surface"};
+        const char** extensionNames = glfwGetRequiredInstanceExtensions(&extensionCount);
         vkInstanceInfo.enabledExtensionCount = extensionCount;
-        vkInstanceInfo.ppEnabledExtensionNames = extensionNames.data();
+        vkInstanceInfo.ppEnabledExtensionNames = extensionNames;
 
         vkCreateInstance(&vkInstanceInfo, nullptr, &_vkInstanceHandle);
         
@@ -115,6 +110,11 @@ namespace Wombat
 
      void Renderer::OpenDebugWindow()
      {
+        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+        _glfwDebugWindow = glfwCreateWindow(640, 480, "Wombat Debug", NULL, NULL);
+        if(glfwCreateWindowSurface(_vkInstanceHandle, _glfwDebugWindow, NULL, &_vkSurface) != VK_SUCCESS)
+            throw std::runtime_error("GLFW failed to create surface");
+
          while (!glfwWindowShouldClose(_glfwDebugWindow))
         {
             glfwPollEvents();

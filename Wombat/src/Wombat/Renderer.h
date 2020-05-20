@@ -5,6 +5,7 @@
 #include <vector>
 #include <cstring>
 #include <stdexcept>
+#include <iostream>
 
 namespace Wombat
 {
