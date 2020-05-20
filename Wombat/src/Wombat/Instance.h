@@ -1,16 +1,23 @@
 #pragma once
-#define GLFW_INCLUDE_VULKAN
-#include "GLFW/glfw3.h"
+#include "Renderer.h"
+
+#include <vector>
 
 namespace Wombat
 {
+    /*
+    Takes care of any init, generating resources, taking care of resource life-time
+    */
     class Instance
     {
         public:
-            Instance::Instance();
+            Instance::Instance(const char* appName, bool isDebugEnabled);
             Instance::~Instance();
+            void OpenDebugWindow();
 
         private:
-            VkInstance _vkInstance;
+            Wombat::Renderer _renderer;
+
+
     };
-}
+} //namespace Wombat

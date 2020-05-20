@@ -48,9 +48,15 @@ project "Wombat"
 
 	}
 
+	libdirs
+	{
+		"vendor/vulkan/Lib"
+	}
+
 	links
 	{
-		"GLFW"
+		"GLFW",
+		"vulkan-1.lib"
 	}
 
 	filter "system:windows"
