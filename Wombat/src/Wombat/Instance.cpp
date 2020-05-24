@@ -7,7 +7,7 @@ namespace Wombat
     {
         std::cout << "Instance ctor" << std::endl;
 
-        _renderer = new Renderer(appName, isDebugEnabled);
+        _pRenderer = new Renderer(appName, isDebugEnabled);
     }
 
     Instance::~Instance()
@@ -15,11 +15,11 @@ namespace Wombat
         std::cout << "Instance destruction" << std::endl;
 
 
-        delete _renderer;
+        delete _pRenderer;
     }
 
     void Instance::OpenDebugWindow()
     {
-        _renderer->OpenDebugWindow();
+        _pRenderer->OpenDebugWindow();
     }
 }

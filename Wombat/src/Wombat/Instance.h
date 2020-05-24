@@ -17,7 +17,7 @@ namespace Wombat
             void OpenDebugWindow();
 
         private:
-            Wombat::Renderer* _renderer;
+            Wombat::Renderer* _pRenderer;
 
 
     };
