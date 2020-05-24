@@ -2,6 +2,23 @@
 
 namespace Wombat
 {
+
+    VkResult CreateDebugUtilsMessengerEXT(VkInstance instance,
+                                          const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo,
+                                          const VkAllocationCallbacks *pAllocator,
+                                          VkDebugUtilsMessengerEXT *pDebugMessenger)
+    {
+        auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
+        if (func != nullptr)
+        {
+            return func(instance, pCreateInfo, pAllocator, pDebugMessenger);
+        }
+        else
+        {
+            return VK_ERROR_EXTENSION_NOT_PRESENT;
+        }
+    }
+
     Renderer::Renderer(const char *appName, bool isDebugEnabled = true)
     {
         _requiredVkValidationLayers =
@@ -19,13 +36,39 @@ namespace Wombat
         uint32_t extensionCount = 0;
         // std::vector<const char*> extensionNames = {"VK_KHR_surface"};
         const char **extensionNames = glfwGetRequiredInstanceExtensions(&extensionCount);
-        _requiredVkInstanceExtProps = std::vector<const char *>{*extensionNames};
 
+         _requiredVkInstanceExtProps = std::vector<const char *>{*extensionNames};
+
+        if (isDebugEnabled)
+        {
+            _requiredVkInstanceExtProps.push_back("VK_EXT_debug_utils");
+        }
+
+        for (size_t i = 0; i < _requiredVkInstanceExtProps.size(); i++)
+        {
+            std::cout << _requiredVkInstanceExtProps[i] << std::endl;
+        }
+        
         _requiredVkDeviceExtProps =
             {
                 "VK_KHR_SWAPCHAIN_EXTENSION_NAME"};
 
         Renderer::CreateInstance(appName, isDebugEnabled);
+
+        if (isDebugEnabled)
+        {
+            VkDebugUtilsMessengerCreateInfoEXT createInfo{};
+            createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
+            createInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
+            createInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+            createInfo.pfnUserCallback = debugCallback;
+            createInfo.pUserData = nullptr; // Optional
+
+            if (CreateDebugUtilsMessengerEXT(_vkInstanceHandle, &createInfo, nullptr, &_debugMessenger) != VK_SUCCESS)
+            {
+                throw std::runtime_error("failed to set up debug messenger!");
+            }
+        }
     }
 
     Renderer::~Renderer()
@@ -33,8 +76,29 @@ namespace Wombat
         std::cout << "Renderer destruction" << std::endl;
         glfwTerminate();
 
-        vkDestroySurfaceKHR(_vkInstanceHandle, _vkSurface, nullptr);
-        vkDestroyInstance(_vkInstanceHandle, nullptr);
+        // void *obsModule = GET_MODULE(L"graphics-hook64.dll");
+        // if (obsModule != nullptr)
+        // {
+        //     FREE_MODULE((void *)obsModule);
+        // }
+
+        try
+        {
+            vkDestroySurfaceKHR(_vkInstanceHandle, _vkSurface, nullptr);
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+
+        try
+        {
+            vkDestroyInstance(_vkInstanceHandle, nullptr);
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << e.what() << '\n';
+        }
     }
 
     std::vector<VkLayerProperties> Renderer::GetValidationLayerProperties()
@@ -138,19 +202,51 @@ namespace Wombat
         vkInstanceInfo.enabledExtensionCount = static_cast<uint32_t>(_requiredVkInstanceExtProps.size());
         vkInstanceInfo.ppEnabledExtensionNames = _requiredVkInstanceExtProps.data();
 
-        vkCreateInstance(&vkInstanceInfo, nullptr, &_vkInstanceHandle);
+        VkResult vkResult = vkCreateInstance(&vkInstanceInfo, nullptr, &_vkInstanceHandle);
+        if (vkResult != VK_SUCCESS)
+            ThrowErrorWithVkResult("Failed to create VK instance ", vkResult);
+    }
+
+    void Renderer::ThrowErrorWithVkResult(const char *errMsg, VkResult vkResult)
+    {
+        std::string err = errMsg + std::to_string(vkResult);
+        throw std::runtime_error(err);
     }
 
     void Renderer::OpenDebugWindow()
     {
-        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-        _glfwDebugWindow = glfwCreateWindow(640, 480, "Wombat Debug", NULL, NULL);
-        if (glfwCreateWindowSurface(_vkInstanceHandle, _glfwDebugWindow, NULL, &_vkSurface) != VK_SUCCESS)
-            throw std::runtime_error("GLFW failed to create surface");
-
-        while (!glfwWindowShouldClose(_glfwDebugWindow))
+        try
         {
-            glfwPollEvents();
+            glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+            _glfwDebugWindow = glfwCreateWindow(640, 480, "Wombat Debug", NULL, NULL);
+            VkResult vkResult = glfwCreateWindowSurface(_vkInstanceHandle, _glfwDebugWindow, NULL, &_vkSurface);
+            if (vkResult != VK_SUCCESS)
+            {
+                ThrowErrorWithVkResult("GLFW failed to create surface ", vkResult);
+            }
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+
+        try
+        {
+            while (!glfwWindowShouldClose(_glfwDebugWindow))
+            {
+                try
+                {
+                    glfwPollEvents();
+                }
+                catch (const std::exception &e)
+                {
+                    std::cerr << e.what() << '\n';
+                }
+            }
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << e.what() << '\n';
         }
     }
 
@@ -314,4 +410,17 @@ namespace Wombat
         //error if we got nothing
         throw std::runtime_error("No compatible GPU available");
     }
+
+    VKAPI_ATTR VkBool32 VKAPI_CALL Renderer::debugCallback(
+        VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+        VkDebugUtilsMessageTypeFlagsEXT messageType,
+        const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData,
+        void *pUserData)
+    {
+
+        std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
+
+        return VK_FALSE;
+    }
+
 } // namespace Wombat

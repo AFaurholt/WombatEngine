@@ -61,7 +61,10 @@ project "Wombat"
 
 	filter "system:windows"
 		systemversion 	"latest"
-
+		buildoptions
+		{
+			
+		}
 		defines
 		{
 			"WB_PLATFORM_WINDOWS"

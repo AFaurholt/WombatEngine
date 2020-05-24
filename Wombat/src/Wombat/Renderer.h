@@ -1,4 +1,10 @@
 #pragma once
+
+// #ifdef WB_PLATFORM_WINDOWS
+// #define GET_MODULE(filename) GetModuleHandle(filename)
+// #define FREE_MODULE(handle) FreeLibrary(handle)
+// #endif
+
 #define GLFW_INCLUDE_VULKAN
 #include "GLFW/glfw3.h"
 
@@ -8,9 +14,21 @@
 #include <cstring>
 #include <stdexcept>
 #include <iostream>
+#include <string>
+// #ifdef WB_PLATFORM_WINDOWS
+// #include <windows.h>
+// #include <windef.h>
+// #include <libloaderapi.h>
+// #endif
 
 namespace Wombat
 {
+
+    VkResult CreateDebugUtilsMessengerEXT(VkInstance instance,
+                                          const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo,
+                                          const VkAllocationCallbacks *pAllocator,
+                                          VkDebugUtilsMessengerEXT *pDebugMessenger);
+
     /*
     Takes care of renderer init and resources
     Currently uses Vulkan
@@ -35,6 +53,7 @@ namespace Wombat
         int32_t _presentFamilyId;
         PhysicalGpu *_selectedGpu;
         VkPhysicalDevice *_selectedPhysicalDevice;
+        VkDebugUtilsMessengerEXT _debugMessenger;
 
         std::vector<VkLayerProperties> GetValidationLayerProperties();
         bool CheckAllLayersSupported(std::vector<VkLayerProperties> availableLayers,
@@ -44,5 +63,12 @@ namespace Wombat
         void CreateInstance(const char *appName, bool isDebugEnabled);
         void UpdatePhysicalDeviceList();
         void AutoSelectBestGpu();
+        void ThrowErrorWithVkResult(const char *errMsg, VkResult vkResult);
+
+        static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
+            VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+            VkDebugUtilsMessageTypeFlagsEXT messageType,
+            const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData,
+            void *pUserData);
     };
 } // namespace Wombat
