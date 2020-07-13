@@ -1,6 +1,3 @@
-# ignore libs -- please tell me a better option to handle the vulkan libs
-vendor/vulkan/Lib/**
-
 # ignore vs and vscode folders, let people do their own tasks and settings
 .vs/**
 .vscode/**
