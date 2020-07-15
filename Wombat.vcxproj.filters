@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Primitives">
+      <UniqueIdentifier>{31164E03-1DCE-8F50-86D5-68AC72AC2A41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Primitives\Components">
+      <UniqueIdentifier>{A61A563C-1287-1137-DB7A-A99447A6339F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering">
+      <UniqueIdentifier>{E3AE1F7C-4F19-D4F2-9857-85980401B247}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering\Components">
+      <UniqueIdentifier>{18A02F79-042F-B942-AD4D-CD3D99BBC9E8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering\Systems">
+      <UniqueIdentifier>{EA372082-564E-1E18-9FC5-A9390B1BEF9F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows">
+      <UniqueIdentifier>{5032B729-BC11-36C5-C529-C19B31889C26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\Components">
+      <UniqueIdentifier>{6505CE7A-51E9-8ED0-BA49-8923A64C7952}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\Systems">
+      <UniqueIdentifier>{57D8861D-C363-F4E1-CC74-77D6387F50E2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Wombat\src\Wombat\Primitives\Components\ColorComponent.hpp">
+      <Filter>Primitives\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Wombat\src\Wombat\Primitives\Components\MeshComponent.hpp">
+      <Filter>Primitives\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Wombat\src\Wombat\Primitives\Components\PositionComponent.hpp">
+      <Filter>Primitives\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Wombat\src\Wombat\Primitives\Components\VertexComponent.hpp">
+      <Filter>Primitives\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Wombat\src\Wombat\Rendering\Components\RendererComponent.hpp">
+      <Filter>Rendering\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Wombat\src\Wombat\Rendering\Components\RendererOptionsComponent.hpp">
+      <Filter>Rendering\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Wombat\src\Wombat\Rendering\Components\SurfaceComponent.hpp">
+      <Filter>Rendering\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Wombat\src\Wombat\Rendering\Systems\GpuSelectionSystem.hpp">
+      <Filter>Rendering\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Wombat\src\Wombat\Windows\Components\WindowComponent.hpp">
+      <Filter>Windows\Components</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Wombat\src\Wombat\Instance.cpp" />
+    <ClCompile Include="Wombat\src\Wombat\PhysicalGpu.cpp" />
+    <ClCompile Include="Wombat\src\Wombat\Primitives\Components\ColorComponent.cpp">
+      <Filter>Primitives\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Wombat\src\Wombat\Primitives\Components\MeshComponent.cpp">
+      <Filter>Primitives\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Wombat\src\Wombat\Primitives\Components\PositionComponent.cpp">
+      <Filter>Primitives\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Wombat\src\Wombat\Primitives\Components\VertexComponent.cpp">
+      <Filter>Primitives\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Wombat\src\Wombat\Renderer.cpp" />
+    <ClCompile Include="Wombat\src\Wombat\Rendering\Components\RendererComponent.cpp">
+      <Filter>Rendering\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Wombat\src\Wombat\Rendering\Components\RendererOptionsComponent.cpp">
+      <Filter>Rendering\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Wombat\src\Wombat\Rendering\Systems\GpuSelectionSystem.cpp">
+      <Filter>Rendering\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Wombat\src\Wombat\Rendering\Systems\RendererSystem.cpp">
+      <Filter>Rendering\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Wombat\src\Wombat\Window.cpp" />
+    <ClCompile Include="Wombat\src\Wombat\Windows\Components\WindowComponent.cpp">
+      <Filter>Windows\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Wombat\src\Wombat\Windows\Systems\WindowSystem.cpp">
+      <Filter>Windows\Systems</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
