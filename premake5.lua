@@ -1,162 +1,46 @@
-workspace "Wombat"
-	architecture "x64"
-	startproject "TestProject"
+workspace "WombatEngine"
+    architecture "x64"
+    configurations { "Debug", "Release" }
 
-	configurations
-	{
-		"Debug",
-		"Release",
-		"Dist"
-	}
+-- vars
+    buildname   = "%{prj.name}-%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}/"
+    bintarget   = "bin-target/" .. buildname
+    binobj      = "bin-obj/" .. buildname
+    prjsrc      = "%{prj.name}/src/"
+    prjinc      = "%{prj.name}/include/"
+    objcopyx64  = "objcopy --input binary --output-target pe-x86-64 --binary-architecture i386:x86-64 "
 
-outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+	project "Wombat"
+    -- location         ""
+    kind            "StaticLib"
+    language        "C++"
+    cppdialect      "C++17"
+    -- staticruntime   "on"
 
-IncludeDir = {}
-IncludeDir["GLFW"] = "Wombat/vendor/glfw/include"
-IncludeDir["glm"] = "Wombat/vendor/glm"
-IncludeDir["vulkan"] = "Wombat/vendor/Vulkan-Headers/include"
+    targetdir       (bintarget)
+    objdir          (binobj)
 
-group "Dependencies"
-	include "Wombat/vendor/Vulkan-Headers"
-	include "Wombat/vendor/glfw"
+    files {
+        prjsrc .. "**.hpp"
+        , prjsrc .. "**.cpp"
+    }
 
-group ""
+filter "system:windows"
+    systemversion   "latest"
+    defines {
+        "WOMBAT_WINDOWS"
+    }
 
-project "Wombat"
-	location 	"Wombat"
-	kind 		"StaticLib"
-	language 	"C++"
-	cppdialect 	"C++17"
-	staticruntime "on"
+filter "configurations:Debug"
+    defines {
+        "WOMBAT_DEBUG"
+    }
+    runtime "Debug"
+    symbols "On"
 
-	targetdir 	("bin/" .. outputdir .. "/%{prj.name}")
-	objdir 		("bin-obj/" .. outputdir .. "/%{prj.name}")
-
-	-- source files
-	files
-	{
-		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
-	}
-
-	-- include dirs
-	includedirs
-	{
-		"%{prj.name}/src",
-		"%{IncludeDir.vulkan}",
-		"%{IncludeDir.GLFW}"
-
-	}
-
-	libdirs
-	{
-		"vendor/vulkan/Lib"
-	}
-
-	links
-	{
-		"GLFW",
-		"vulkan-1.lib"
-	}
-
-	filter "system:windows"
-		systemversion 	"latest"
-		buildoptions
-		{
-			
-		}
-		defines
-		{
-			"WB_PLATFORM_WINDOWS"
-		}
-	--windows end
-
-	filter "configurations:Debug"
-		defines
-		{
-			"WB_DEBUG"
-		}
-		runtime "Debug"
-		symbols "on"
-	--debug end
-
-	filter "configurations:Release"
-		defines
-		{
-			"WB_RELEASE"
-		}
-		runtime "Release"
-		optimize "on"
-	--Release end
-
-	filter "configurations:Dist"
-		defines
-		{
-			"WB_DIST"
-		}
-		runtime "Release"
-		optimize "on"
-	--Dist end
-
-project "TestProject"
-	location 		"TestProject"
-	kind 			"ConsoleApp"
-	language 		"C++"
-	cppdialect 		"C++17"
-	staticruntime 	"on"
-
-	targetdir 	("bin/" .. outputdir .. "/%{prj.name}")
-	objdir 		("bin-obj/" .. outputdir .. "/%{prj.name}")
-	
-	files
-	{
-		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
-	}
-
-	includedirs
-	{
-		"Wombat/src",
-		"Wombat/vendor/**"
-	}
-
-	links
-	{
-		"Wombat"
-	}
-
-	filter "system:windows"
-		systemversion 	"latest"
-
-		defines
-		{
-			"WB_PLATFORM_WINDOWS"
-		}
-	--windows end
-
-	filter "configurations:Debug"
-		defines
-		{
-			"WB_DEBUG"
-		}
-		runtime "Debug"
-		symbols "on"
-	--debug end
-
-	filter "configurations:Release"
-		defines
-		{
-			"WB_RELEASE"
-		}
-		runtime "Release"
-		optimize "on"
-	--Release end
-
-	filter "configurations:Dist"
-		defines
-		{
-			"WB_DIST"
-		}
-		runtime "Release"
-		optimize "on"
-	--Dist end
+filter "configurations:Release"
+    defines {
+        "WOMBAT_RELEASE"
+    }
+    runtime "Release"
+    optimize "Full"

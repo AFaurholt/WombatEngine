@@ -2,6 +2,13 @@
 .vs/**
 .vscode/**
 
+#ignore make
+**.make
+Makefile
+
+#ignore generated binaries
+bin-obj/**
+bin-target/**
 
 #ignore any vs generated files, this is handled with premake5
 *.vcxproj
