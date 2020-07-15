@@ -23,9 +23,9 @@ namespace Wombat
 	class Renderer
 	{
 	public:
-		Renderer::Renderer(const char* appName, bool debugMode);
-		Renderer::Renderer() = default;
-		Renderer::~Renderer();
+		Renderer(const char* appName, bool debugMode);
+		Renderer() = default;
+		~Renderer();
 		void OpenDebugWindow();
 
 	private:

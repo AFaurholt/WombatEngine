@@ -12,8 +12,8 @@ namespace Wombat
     class Instance
     {
         public:
-            Instance::Instance(const char* appName, bool isDebugEnabled);
-            Instance::~Instance();
+            Instance(const char* appName, bool isDebugEnabled);
+            ~Instance();
             void OpenDebugWindow();
 
         private:

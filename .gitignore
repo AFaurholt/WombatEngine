@@ -1,6 +1,7 @@
 # ignore vs and vscode folders, let people do their own tasks and settings
 .vs/**
 .vscode/**
+*.code-workspace
 
 #ignore make
 **.make
@@ -12,10 +13,10 @@ bin-target/**
 
 #ignore any vs generated files, this is handled with premake5
 *.vcxproj
+*.vcxproj.filters
 *.sln
 *.rsuser
 *.suo
 *.user
 *.userosscache
 *.sln.docstates
-*.filters

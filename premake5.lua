@@ -19,7 +19,8 @@ project "Wombat"
     kind            "StaticLib"
     language        "C++"
     cppdialect      "C++17"
-    staticruntime   "on"
+	staticruntime   "on"
+	compileas		"C++"
 
     targetdir       (bintarget)
     objdir          (binobj)
@@ -46,7 +47,8 @@ filter "system:windows"
 
 filter "configurations:Debug"
     defines {
-        "WOMBAT_DEBUG"
+		"WOMBAT_DEBUG"
+		, "verbose"
     }
     runtime "Debug"
     symbols "On"
@@ -62,6 +64,7 @@ project "GLFW"
 	kind "StaticLib"
 	language "C"
 	staticruntime "on"
+	compileas "C"
 
 	targetdir	(bintarget)
 	objdir		(binobj)
@@ -77,6 +80,7 @@ project "GLFW"
 		, linkedlibs["GLFW"] .. "src/monitor.c"
 		, linkedlibs["GLFW"] .. "src/vulkan.c"
 		, linkedlibs["GLFW"] .. "src/window.c"
+		
 	}
 
 	defines{
