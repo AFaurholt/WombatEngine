@@ -1,3 +1,6 @@
 [submodule "Wombat/vendor/glfw"]
 	path = Wombat/vendor/glfw
 	url = https://github.com/AFaurholt/glfw.git
+[submodule "Wombat/vendor/vulkan"]
+	path = Wombat/vendor/vulkan
+	url = https://github.com/AFaurholt/vulkan-bin-inc-lib.git
