@@ -11,10 +11,8 @@ workspace "WombatEngine"
 	objcopyx64  = "objcopy --input binary --output-target pe-x86-64 --binary-architecture i386:x86-64 "
 	submoddir	= "Wombat/vendor/"
 	linkedlibs	= {}
-	linkedlibs["GLFW"] = submoddir .. "glfw/"
-
-
-
+	linkedlibs["GLFW"] 		= submoddir .. "glfw/"
+	linkedlibs["vulkan"]	= submoddir .. "vulkan/"
 	
 project "Wombat"
     -- location         ""
@@ -33,6 +31,7 @@ project "Wombat"
 	
 	includedirs {
 		linkedlibs["GLFW"] .. "include"
+		, linkedlibs["vulkan"] .. "include"
 	}
 
 	links {

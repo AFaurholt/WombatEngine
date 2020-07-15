@@ -1,3 +1,5 @@
+#include "GLFW/glfw3.h"
+
 namespace Wombat::Window
 {
     //TODO make template

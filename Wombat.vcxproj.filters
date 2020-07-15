@@ -71,9 +71,6 @@
       <Filter>Primitives\Components</Filter>
     </ClCompile>
     <ClCompile Include="Wombat\src\Wombat\Renderer.cpp" />
-    <ClCompile Include="Wombat\src\Wombat\Rendering\Components\RendererComponent.cpp">
-      <Filter>Rendering\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Wombat\src\Wombat\Rendering\Components\RendererOptionsComponent.cpp">
       <Filter>Rendering\Components</Filter>
     </ClCompile>

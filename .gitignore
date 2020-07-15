@@ -18,3 +18,4 @@ bin-target/**
 *.user
 *.userosscache
 *.sln.docstates
+*.filters

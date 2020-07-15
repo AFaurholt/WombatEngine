@@ -1,3 +1,5 @@
+#include "vulkan/vulkan.hpp"
+
 namespace Wombat::Rendering
 {
     //TODO make template
@@ -7,19 +9,5 @@ namespace Wombat::Rendering
         /* data */
         //VK specialization
         VkSurfaceKHR _vkSurfaceKHR;
-        VkSurfaceFormatKHR _vkSurfaceFormatKHR;
-
-    public:
-        SurfaceComponent(/* args */);
-        ~SurfaceComponent();
-    };
-    
-    SurfaceComponent::SurfaceComponent(/* args */)
-    {
-    }
-    
-    SurfaceComponent::~SurfaceComponent()
-    {
-    }
-    
+        VkSurfaceFormatKHR _vkSurfaceFormatKHR;    
 } // namespace Wombat::Rendering
