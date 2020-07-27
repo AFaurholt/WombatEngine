@@ -3,11 +3,10 @@
 namespace Wombat::Rendering
 {
     //TODO make template
-    class SurfaceComponent
+    struct SurfaceComponent
     {
-    private:
-        /* data */
         //VK specialization
         VkSurfaceKHR _vkSurfaceKHR;
         VkSurfaceFormatKHR _vkSurfaceFormatKHR;    
+    };
 } // namespace Wombat::Rendering

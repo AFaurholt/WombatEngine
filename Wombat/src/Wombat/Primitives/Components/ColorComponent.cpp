@@ -1,4 +1,4 @@
-#include "ColorComponent.hpp"
+#include "Wombat/Primitives/Components/ColorComponent.hpp"
 
 namespace Wombat::Primitives
 {

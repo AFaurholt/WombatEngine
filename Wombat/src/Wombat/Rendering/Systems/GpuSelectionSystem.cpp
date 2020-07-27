@@ -1,4 +1,4 @@
-#include "GpuSelectionSystem.hpp"
+#include "Wombat/Rendering/Systems/GpuSelectionSystem.hpp"
 
 namespace Wombat::Rendering
 {

@@ -1,4 +1,4 @@
-#include "VertexComponent.hpp"
+#include "Wombat/Primitives/Components/VertexComponent.hpp"
 
 namespace Wombat::Primitives
 {

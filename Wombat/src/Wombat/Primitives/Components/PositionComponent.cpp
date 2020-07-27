@@ -1,4 +1,4 @@
-#include "PositionComponent.hpp"
+#include "Wombat/Primitives/Components/PositionComponent.hpp"
 
 namespace Wombat::Primitives
 {

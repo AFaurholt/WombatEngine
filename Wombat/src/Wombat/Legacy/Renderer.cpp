@@ -28,7 +28,7 @@ namespace Wombat
 			_requiredVkInstanceExtProps.push_back("VK_EXT_debug_utils");
 		}
 
-#ifdef WB_PLATFORM_WINDOWS
+#ifdef WOMBAT_WINDOWS
 		_requiredVkInstanceExtProps.push_back("VK_KHR_win32_surface");
 #endif // WB_PLATFORM_WINDOWS
 
@@ -317,10 +317,11 @@ namespace Wombat
 		{
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 			_glfwDebugWindow = glfwCreateWindow(640, 480, "Wombat Debug", NULL, NULL);
-			if (glfwCreateWindowSurface(_vkInstanceHandle, _glfwDebugWindow, NULL, &_vkSurface) != VK_SUCCESS)
-			{
-				throw std::runtime_error("GLFW failed to create surface");
-			}
+			auto res = glfwCreateWindowSurface(_vkInstanceHandle, _glfwDebugWindow, NULL, &_vkSurface);
+			// if (glfwCreateWindowSurface(_vkInstanceHandle, _glfwDebugWindow, NULL, &_vkSurface) != VK_SUCCESS)
+			// {
+			// 	throw std::runtime_error("GLFW failed to create surface");
+			// }
 
 			try
 			{
@@ -332,6 +333,17 @@ namespace Wombat
 				CreateCommandPool();
 				CreateCommandBuffer();
 				CreateSwapchain();
+
+
+				VkPhysicalDeviceMemoryProperties2 memoryProps2{};
+				memoryProps2.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MEMORY_PROPERTIES_2;
+				
+				vkGetPhysicalDeviceMemoryProperties2(_selectedGpu->physicalDevice, &memoryProps2);
+
+					for (size_t i = 0; i < memoryProps2.memoryProperties.memoryHeapCount; i++)
+					{
+						printf("Heap index: %i -- Heap size: %zd\n\n", i, memoryProps2.memoryProperties.memoryHeaps[i].size);
+					}
 			}
 			catch (const std::exception& e)
 			{

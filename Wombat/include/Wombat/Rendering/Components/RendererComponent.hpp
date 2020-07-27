@@ -4,14 +4,10 @@
 
 namespace Wombat::Rendering
 {
-    class RendererComponent
+    struct RendererComponent
     {
-    public:
-        RendererOptionsComponent _rendererOpts;
+        RendererOptionsComponent rendererOpts;
         //Vulkan specialization
-        VkInstance _vkInstance;
+        VkInstance rendererInstance;
     };
-    
-    
-    
 } // namespace Wombat::Rendering

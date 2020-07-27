@@ -1,4 +1,4 @@
-#include "MeshComponent.hpp"
+#include "Wombat/Primitives/Components/MeshComponent.hpp"
 
 namespace Wombat::Primitives
 {
